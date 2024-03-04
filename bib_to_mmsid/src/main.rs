@@ -8,10 +8,11 @@ struct Person {
 }
 
 fn main() -> Result<()> {
-    let conn = Connection::open_in_memory()?;
+    // let conn = Connection::open_in_memory()?;
+    let conn = Connection::open("some.db")?;
 
     conn.execute(
-        "CREATE TABLE if not exists` person (
+        "CREATE TABLE if not exists person (
             id    INTEGER PRIMARY KEY,
             name  TEXT NOT NULL,
             data  BLOB
