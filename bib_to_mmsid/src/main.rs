@@ -1,4 +1,4 @@
-use clap::{ArgAction, Parser};
+use clap::{ArgAction, Command, Parser};
 use rusqlite::{Connection, Result};
 
 /*
@@ -7,6 +7,24 @@ use rusqlite::{Connection, Result};
 */
 include!(concat!(env!("OUT_DIR"), "/git_commit.rs"));
 
+// - argument-handling ----------------------------------------------
+#[derive(Parser)]
+#[command(
+    // version = "1.0",
+    version = GIT_COMMIT,
+    author = "Author Name <email@example.com>",
+    about = "Runs \"update\" or \"report\" bookplate-scripts based on the provided arguments."
+)]
+struct Args {
+    // #[arg(long, action = ArgAction::SetTrue)]
+    // report: bool,
+    // #[arg(long, action = ArgAction::SetTrue)]
+    // update: bool,
+    // #[arg(long, action = ArgAction::SetTrue)]
+    // both: bool,
+} // end argument-handling ------------------------------------------
+
+// - Person class for sqlite ----------------------------------------
 #[derive(Debug)]
 struct Person {
     id: i32,
@@ -14,7 +32,16 @@ struct Person {
     data: Option<Vec<u8>>,
 }
 
+// - main function --------------------------------------------------
 fn main() -> Result<()> {
+
+    // - argument-handling ------------------------------------------
+    let app = Command::new("Version")
+        .version(GIT_COMMIT) // Use the git commit hash as the version
+        .about("This app explores outputting the git-commit (on a `--version` flag) via a build.rs script.");
+    // println!("app: {:?}", app);
+    let _matches = app.get_matches();
+
     // let conn = Connection::open_in_memory()?;
     let conn = Connection::open("some.db")?;
 
