@@ -2,7 +2,7 @@ use rusqlite::{Connection, Result};
 
 #[derive(Debug)]
 struct Person {
-    id: i32, 
+    id: i32,
     name: String,
     data: Option<Vec<u8>>,
 }
@@ -10,7 +10,6 @@ struct Person {
 fn main() -> Result<()> {
     // let conn = Connection::open_in_memory()?;
     let conn = Connection::open("some.db")?;
-
 
     let mut stmt = conn.prepare("SELECT id, name, data FROM person")?;
     let person_iter = stmt.query_map([], |row| {
@@ -27,25 +26,24 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-
 /* Code to create a person-table, and insert a record */
 
-    // conn.execute(
-    //     "CREATE TABLE if not exists person (
-    //         id    INTEGER PRIMARY KEY,
-    //         name  TEXT NOT NULL,
-    //         data  BLOB
-    //     )",
-    //     (), // empty list of parameters.
-    // )?;
+// conn.execute(
+//     "CREATE TABLE if not exists person (
+//         id    INTEGER PRIMARY KEY,
+//         name  TEXT NOT NULL,
+//         data  BLOB
+//     )",
+//     (), // empty list of parameters.
+// )?;
 
-    // let me = Person {
-    //     id: 0,
-    //     name: "Steven".to_string(),
-    //     data: None,
-    // };
-    
-    // conn.execute(
-    //     "INSERT INTO person (name, data) VALUES (?1, ?2)",
-    //     (&me.name, &me.data),
-    // )?;
+// let me = Person {
+//     id: 0,
+//     name: "Steven".to_string(),
+//     data: None,
+// };
+
+// conn.execute(
+//     "INSERT INTO person (name, data) VALUES (?1, ?2)",
+//     (&me.name, &me.data),
+// )?;
